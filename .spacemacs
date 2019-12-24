@@ -10,7 +10,7 @@ values."
    ;; Base distribution to use. This is a layer contained in the directory
    ;; `+distribution'. For now available distributions are `spacemacs-base'
    ;; or `spacemacs'. (default 'spacemacs)
-   dotspacemacs-distribution 'spacemacs-base
+   dotspacemacs-distribution 'spacemacs
    ;; Lazy installation of layers (i.e. layers are installed only when a file
    ;; with a supported type is opened). Possible values are `all', `unused'
    ;; and `nil'. `unused' will lazy install only unused layers (i.e. layers
@@ -31,29 +31,31 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     sql
+     yaml
+     html
+     csv
+     rust
+     javascript
+     dash
+     (python :variable
+             python-test-runner 'pytest
+             python-backend 'anaconda)
      osx
-     ;; ----------------------------------------------------------------
-     ;; Example of useful layers you may want to use right away.
-     ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
-     ;; <M-m f e R> (Emacs style) to install them.
-     ;; ----------------------------------------------------------------
-     ivy
-     ;; auto-completion
-     ;; better-defaults
+     helm
+     auto-completion
+     better-defaults
      emacs-lisp
      ;; git
-      markdown
+     markdown
      org
-     spacemacs-org ; need this to fix annoying startup issue
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
-     spell-checking
+     (shell :variables
+            shell-default-height 30
+            shell-default-position 'bottom)
+     ;; spell-checking
      syntax-checking
      ;; version-control
-     c-c++
-     python
-     ruby
+     elixir
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -137,7 +139,7 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("SF Mono"
+   dotspacemacs-default-font '("Source Code Pro"
                                :size 13
                                :weight normal
                                :width normal
@@ -264,7 +266,7 @@ values."
    ;;                       text-mode
    ;;   :size-limit-kb 1000)
    ;; (default nil)
-   dotspacemacs-line-numbers nil
+   dotspacemacs-line-numbers 'relative
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
@@ -305,6 +307,7 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  (setenv "WORKON_HOME" "/anaconda3/envs")
   )
 
 (defun dotspacemacs/user-config ()
@@ -314,6 +317,11 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  (setq-default pytest-project-root-files '("setup.py"
+                                            ".git"
+                                            ".hg"
+                                            ".exercism"
+                                            ))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -325,7 +333,7 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (toc-org org-present org-bullets yapfify rvm ruby-tools ruby-test-mode rubocop rspec-mode robe reveal-in-osx-finder rbenv rake pyvenv pytest pyenv-mode py-isort pip-requirements pbcopy osx-trash osx-dictionary org-projectile org-plus-contrib org-pomodoro alert log4e gntp org-download mmm-mode minitest markdown-toc markdown-mode live-py-mode launchctl hy-mode htmlize gnuplot gh-md flyspell-correct-ivy flyspell-correct flycheck-pos-tip pos-tip flycheck disaster cython-mode cmake-mode clang-format chruby bundler inf-ruby auto-dictionary anaconda-mode pythonic f s which-key wgrep use-package smex pcre2el macrostep ivy-hydra hydra help-fns+ helm-make helm helm-core popup flx exec-path-from-shell evil-visualstar evil-escape evil goto-chg undo-tree elisp-slime-nav diminish counsel-projectile projectile pkg-info epl counsel swiper ivy bind-map bind-key auto-compile packed dash async ace-window avy))))
+    (sql-indent yaml-mode web-mode tagedit slim-mode scss-mode sass-mode pug-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data ws-butler winum volatile-highlights vi-tilde-fringe uuidgen toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode paradox spinner org-bullets open-junk-file neotree move-text lorem-ipsum linum-relative link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-ediff evil-args evil-anzu anzu eval-sexp-fu dumb-jump column-enforce-mode clean-aindent-mode auto-highlight-symbol aggressive-indent adaptive-wrap ace-link csv-mode toml-mode racer flycheck-rust cargo rust-mode js2-mode js-doc company-tern tern coffee-mode ob-elixir flycheck-mix flycheck-credo alchemist elixir-mode unfill mwim helm-company helm-c-yasnippet fuzzy flycheck-pos-tip pos-tip flycheck company-statistics company-anaconda company auto-yasnippet yasnippet ac-ispell auto-complete xterm-color shell-pop multi-term helm-dash eshell-z eshell-prompt-extras esh-help dash-at-point yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional helm-pydoc cython-mode anaconda-mode pythonic f reveal-in-osx-finder pbcopy osx-trash osx-dictionary org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mmm-mode markdown-toc dash s markdown-mode launchctl htmlize gnuplot gh-md which-key use-package pcre2el macrostep hydra lv helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-flx flx helm-descbinds helm-ag exec-path-from-shell evil-visualstar evil-escape evil goto-chg undo-tree elisp-slime-nav diminish bind-map bind-key auto-compile packed ace-window ace-jump-helm-line helm avy helm-core popup async))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
