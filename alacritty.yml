@@ -12,10 +12,10 @@ window:
     y: 10
   background_opacity: 0.92
 font:
-  size: 14.0
-  use_thin_strokes: true
+  size: 13.0
   normal:
-    family: Dank Mono
+    #family: Comic Code Ligatures
+    family: ComicCodeLigatures Nerd Font
 cursor:
   style: Block
   unfocused_hollow: true
